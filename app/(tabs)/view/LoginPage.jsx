@@ -26,7 +26,7 @@ export default function LoginPage() {
 
   if (!fontsLoaded) return null;
 
-  //Login with fakeapi----------  User : emilys ------- Pass : emilyspass
+  //Login with fakeapi------  User : emilys ------- Pass : emilyspass
  const handleLogin = async () => {
     setError('');
     // if field emtpy
