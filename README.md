@@ -1,6 +1,6 @@
-# - Movie App
+# - Movie App 
 
-A React Native movie app built with Expo
+A React Native movie app built with Expo and using FakeApi(DummyJSON) 
 
 ## Features
 - Browse movies by category
