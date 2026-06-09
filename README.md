@@ -19,6 +19,6 @@ A React Native movie app built with Expo and using FakeApi(DummyJSON)
 ]
 
 ## How to Run
-- cd myApp
+- cd my-app
 - npm install
 - npx expo start
