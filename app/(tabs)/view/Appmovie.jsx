@@ -6,8 +6,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import { AntDesign } from '@expo/vector-icons';
-import { useRouter } from 'expo-router'; 
-
+import { useRouter } from 'expo-router';
+import RunningBanner from './RunningBanner';
 const { width } = Dimensions.get('window');
 
 SplashScreen.preventAutoHideAsync();
@@ -16,56 +16,62 @@ SplashScreen.preventAutoHideAsync();
 const bannerImages = [
   {
     id: 1,
-    image: 'https://image.tmdb.org/t/p/original/wXqWR7dHncNRbxoEGybEy7QTe9h.jpg',
-    title: 'ប្រយុទ្ធ',
+    image: 'https://www.anajakhd.com/wp-content/uploads/2025/07/AJWebssite-PS-33.png',
+    title: 'រឿង ភូមិបង្កប់វិញ្ញាណ',
   },
   {
     id: 2,
-    image: 'https://korean-binge.com/wp-content/uploads/2022/04/runon-poster.jpg?w=708',
-    title: 'មនោសញ្ជេតនា',
+    image: 'https://angkordc.com/_next/image?url=%2Fuploads%2FWebsite_Poster_500x750px_a9f990c0d1.jpg&w=3840&q=75',
+    title: 'រឿង ភូមិបុរាណ',
   },
   {
     id: 3,
-    image: 'https://i.pinimg.com/736x/43/09/35/430935fa53c0a63db851fafac021e1de.jpg',
-    title: 'កំប្លែង',
+    image: 'https://m.media-amazon.com/images/M/MV5BMDgwNzhmMjItMDhlYi00ODdlLWI1NjUtZDgxZGMzMGU5MmM4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+    title: 'Colony',
   },
   {
     id: 4,
-    image: 'https://cdn.displate.com/artwork/2026-01-17/df91b72b-83f2-4ba4-ba41-23f8a4c55767.jpg?speedsize=w_681',
-    title: 'បែបវិទ្យាសាស្រ្ត',
+    image: 'https://m.media-amazon.com/images/M/MV5BMGQ5MzVlZjQtNDgyMS00NjM3LTk0MmMtZWY0NjU1ZmU1NTM2XkEyXkFqcGc@._V1_.jpg',
+    title: 'The Mummy',
   },
     {
     id: 5,
     image: 'https://i.pinimg.com/736x/01/fc/a1/01fca1e77cbfbbd6df569c17297d2d4e.jpg',
-    title: 'ហ្គេមដាក់ជីវិត',
+    title: 'Squid Game SS3',
   },
 ];
 
 // ===== DRAMA MOVIES =====
 const dramaMovies = [
-  { id: 1, title: 'ស្នេហា', image: 'https://korean-binge.com/wp-content/uploads/2022/04/runon-poster.jpg?w=708' },
-  { id: 2, title: 'ប្រយុទ្ធ', image: 'https://i.pinimg.com/474x/9e/ea/bb/9eeabb14bcd8302a482e659195b17e4e.jpg' },
-  { id: 3, title: 'វិទ្យាសាស្រ្ត', image: 'https://i.pinimg.com/236x/16/79/65/167965071ddeb1285dba6462098e4b06.jpg' },
-  { id: 4, title: 'ក្តីសង្ឃឹម', image: 'https://i.pinimg.com/736x/35/c0/ce/35c0cedb0cf2939163cfeeafc0622699.jpg' },
-  { id: 5, title: 'កំសត់', image: 'https://i.pinimg.com/736x/35/c0/ce/35c0cedb0cf2939163cfeeafc0622699.jpg' },
+  { id: 1, title: 'Run On', image: 'https://korean-binge.com/wp-content/uploads/2022/04/runon-poster.jpg?w=708' },
+  { id: 2, title: 'BloodHound', image: 'https://i.pinimg.com/474x/9e/ea/bb/9eeabb14bcd8302a482e659195b17e4e.jpg' },
+  { id: 3, title: 'Destined With You', image: 'https://i.pinimg.com/236x/16/79/65/167965071ddeb1285dba6462098e4b06.jpg' },
+  { id: 4, title: 'Family by choice', image: 'https://i.pinimg.com/736x/35/c0/ce/35c0cedb0cf2939163cfeeafc0622699.jpg' },
+  { id: 5, title: 'Fifties Professionals', image: 'https://m.media-amazon.com/images/M/MV5BMWFiZDAyZDAtYTgyNC00NjljLTkxZjktMmVlODVkM2JjMTM3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg' },
 ];
 
 // ===== ACTION MOVIES =====
 const actionMovies = [
-  { id: 1, title: 'ប្រយុទ្ធដល់ទីបញ្ជប់', image: 'https://image.tmdb.org/t/p/original/wXqWR7dHncNRbxoEGybEy7QTe9h.jpg' },
-  { id: 2, title: 'ចម្បាំង', image: 'https://cdn.displate.com/artwork/2026-01-17/df91b72b-83f2-4ba4-ba41-23f8a4c55767.jpg?speedsize=w_681' },
-  { id: 3, title: 'វីរៈបុរស', image: 'https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg' },
-  { id: 4, title: 'ប្រយុទ្ធ', image: 'https://i.pinimg.com/736x/ca/ad/c8/caadc8cd2a3d72522307279ac2f365b8.jpg' },
-  { id: 5, title: 'សង្គ្រាម', image: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_.jpg' },
+  { id: 1, title: 'Jonh Wick', image: 'https://image.tmdb.org/t/p/original/wXqWR7dHncNRbxoEGybEy7QTe9h.jpg' },
+  { id: 2, title: 'Ghost Doctor', image: 'https://cdn.displate.com/artwork/2026-01-17/df91b72b-83f2-4ba4-ba41-23f8a4c55767.jpg?speedsize=w_681' },
+  { id: 3, title: 'Avengers Infinity War', image: 'https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_.jpg' },
+  { id: 4, title: 'The Wonderful', image: 'https://i.pinimg.com/736x/ca/ad/c8/caadc8cd2a3d72522307279ac2f365b8.jpg' },
+  { id: 5, title: 'Iron man Noway home', image: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_.jpg' },
 ];
 
 // ===== COMEDY MOVIES =====
 const comedyMovies = [
-  { id: 1, title: 'សើច', image: 'https://preview.redd.it/this-has-to-be-the-most-funniest-korean-movie-ever-made-v0-f56sdwit9u6e1.jpeg?auto=webp&s=8c81e80cce697f75a1b11ff5a7edd05f03ef5656' },
-  { id: 2, title: 'កំប្លែង', image: 'https://i.pinimg.com/736x/43/09/35/430935fa53c0a63db851fafac021e1de.jpg' },
-  { id: 3, title: 'ប្រយុទ្ធ', image: 'https://i.pinimg.com/474x/9e/ea/bb/9eeabb14bcd8302a482e659195b17e4e.jpg' },
-  { id: 4, title: 'មនោសញ្ជេតនា', image: 'https://i.pinimg.com/1200x/cb/63/a7/cb63a711c39e8d4f5696a8d387f46b49.jpg' },
-  { id: 5, title: 'ញញឹម', image: 'https://korean-binge.com/wp-content/uploads/2022/04/runon-poster.jpg?w=708' },
+  { id: 1, title: 'The 6/45', image: 'https://preview.redd.it/this-has-to-be-the-most-funniest-korean-movie-ever-made-v0-f56sdwit9u6e1.jpeg?auto=webp&s=8c81e80cce697f75a1b11ff5a7edd05f03ef5656' },
+  { id: 2, title: 'Twinkling Watermelon', image: 'https://i.pinimg.com/736x/43/09/35/430935fa53c0a63db851fafac021e1de.jpg' },
+  { id: 3, title: 'I Can Speak', image: 'https://m.media-amazon.com/images/M/MV5BODNhOWEzZDgtMmMyYi00NDNlLThmYWYtZGIyYjEyNTdkYzMxXkEyXkFqcGc@._V1_QL75_UX217.5_.jpg' },
+  { id: 5, title: 'Save the Green Planet!', image: 'https://m.media-amazon.com/images/M/MV5BMTIyOTE3NDE0NV5BMl5BanBnXkFtZTcwMTM1NDAzMQ@@._V1_QL75_UX246_.jpg' },
+];
+const ghostMovies = [
+  { id: 1, title: 'Lee Cronins The Mummy', image: 'https://m.media-amazon.com/images/M/MV5BYjFiZjQ4MWUtM2Y0NC00NGZkLTllMmUtODllZDI5YTljZmZhXkEyXkFqcGc@._V1_QL75_UX262.5_.jpg' },
+  { id: 2, title: 'Scream 7', image: 'https://m.media-amazon.com/images/M/MV5BZDkzZTY5N2QtMmM3YS00ZmE2LWE5ZjgtZjliNWU3MDJlMzI4XkEyXkFqcGc@._V1_QL75_UX492_.jpg' },
+  { id: 3, title: 'Colony', image: 'https://m.media-amazon.com/images/M/MV5BMWI3N2I1OWItMzZlZi00YjM0LTk4NGMtOWM4NjU5N2FlYTJhXkEyXkFqcGc@._V1_QL75_UX240_.jpg' },
+  { id: 4, title: 'Weapons', image: 'https://m.media-amazon.com/images/M/MV5BMjdlOTRhNGItMDE4Mi00MmVlLTk3MzctMDA5NjZhMzQ5ZjBmXkEyXkFqcGc@._V1_QL75_UX783_.jpg' },
+  { id: 5, title: 'Psycho Killer', image: 'https://m.media-amazon.com/images/M/MV5BYjQwOTU1MzYtZDIyNS00MzU5LTlmMGMtOWIyYzNjMjZlYWVkXkEyXkFqcGc@._V1_QL75_UX232.5_.jpg' },
 ];
 
 // ===== POSTER COMPONENT =====
@@ -83,6 +89,7 @@ function MoviePoster({ item }) {
     </TouchableOpacity>
   );
 }
+
 
 // ===== MOVIE SECTION COMPONENT =====
 function MovieSection({ title, data }) {
@@ -157,15 +164,12 @@ export function Appmovie() {
 
         {/* Header */}
         <View style={styles.headerContainer}>
-          <Image 
-          source={{uri:"https://i.pinimg.com/1200x/a6/c1/f2/a6c1f26974c9c0856f9664c613376aff.jpg"}}
-          resizeMode='cover'
-          style={{width:90,height:90,marginBottom:20}}></Image>
-          <Text style={styles.header}>បេនរឿង</Text>
+          <Text style={{fontSize:20,color:"white",padding:40}}>Logo Company Here</Text>
+          <Text style={styles.header}>Name Company Here</Text>
           <Text style={styles.subHeader}>Discover Trending Movies</Text>
         </View>
-
-        {/* Banner Carousel */}
+        <RunningBanner/>
+        {/* Banner */}
         <FlatList
           ref={flatListRef}
           data={bannerImages}
@@ -213,10 +217,11 @@ export function Appmovie() {
         </Text>
 
 
-        <MovieSection title="🎭 រឿង Drama" data={dramaMovies} />
-        <MovieSection title="⚔️ រឿង ប្រយុទ្ធ" data={actionMovies} />
-        <MovieSection title="😂 រឿង កំប្លែង" data={comedyMovies} />
-
+        <MovieSection title=" រឿង កំពុងពេញនិយម" data={dramaMovies} />
+        <MovieSection title=" រឿង បែបប្រយុទ្ធ" data={actionMovies} />
+        <MovieSection title=" រឿង បែបកំប្លែង" data={comedyMovies} />
+        <MovieSection title=" រឿង បែបរន្ធត់" data={ghostMovies} />
+        
       </ScrollView>
       <View style={styles.bottomMenu}>
 
@@ -243,7 +248,7 @@ export function Appmovie() {
             name="search1"
             size={24}
             color={activeTab === 'search' ? '#FF3B5C' : '#888'}
-          />
+          /> 
           <Text style={[
             styles.menuLabel,
             activeTab === 'search' && styles.menuLabelActive
@@ -305,6 +310,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: '#0A0A0A',
+    bottom:50
   },
 
   // Header
@@ -315,22 +321,20 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 32,
-    fontWeight: 'bold',
     color: '#FFFFFF',
-    fontFamily: 'Siemreap',
-    letterSpacing: 1,
+    fontFamily:"Montserrat-Bold",
   },
   subHeader: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#AAAAAA',
     marginTop: 4,
-    fontFamily: 'Siemreap',
+    fontFamily:"Montserrat-Bold"
   },
 
   // Banner
   slide: {
     width: width,
-    height: 350,
+    height: 200,
     position: 'relative',
   },
   image: {
@@ -342,12 +346,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: '40%',
+    height: '20%',
     backgroundColor: 'rgba(0,0,0,0.75)',
   },
   titleContainer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 20,
     left: 20,
     right: 20,
   },
@@ -375,7 +379,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.77)',
   },
   dotActive: {
-    width: 22,
+    width: 15,
     height: 8,
     borderRadius: 4,
     backgroundColor: '#FF3B5C',
@@ -386,7 +390,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 6,
     marginBottom: 20,
-    fontFamily: 'Siemreap',
+    fontFamily: 'Montserrat-Bold',
   },
 
   // Movie Section
