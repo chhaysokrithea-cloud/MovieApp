@@ -1,4 +1,4 @@
-# 🎬 AhnaJak - Movie App
+# - Movie App
 
 A React Native movie app built with Expo
 
@@ -19,6 +19,6 @@ A React Native movie app built with Expo
 ]
 
 ## How to Run
-cd myApp
-npm install
-npx expo start
+- cd myApp
+- npm install
+- npx expo start
