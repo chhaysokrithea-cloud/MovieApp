@@ -29,7 +29,7 @@ export default function LoginPage() {
   //Login with fakeapi----------  User : emilys ------- Pass : emilyspass
  const handleLogin = async () => {
     setError('');
-    // Validate empty fields
+    // if field emtpy
     if (!email || !password) {
       setError('Please fill in all fields!');
       return;
